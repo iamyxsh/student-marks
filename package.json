@@ -1,0 +1,20 @@
+{
+	"name": "studentleader",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^9.0.2",
+		"express": "^4.17.1",
+		"express-async-handler": "^1.1.4",
+		"morgan": "^1.10.0",
+		"mysql": "^2.18.1",
+		"nodemon": "^2.0.7",
+		"sequelize": "^6.6.2"
+	}
+}
