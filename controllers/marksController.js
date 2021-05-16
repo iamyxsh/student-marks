@@ -1,12 +1,16 @@
 const expressAsyncHandler = require("express-async-handler")
 const { db } = require("../database/sqlConnection")
-const AppError = require("../utils/AppError")
 
 const postMarks = expressAsyncHandler(async (req, res) => {
 	const { physics, maths, chem, total, percentage, roll } = req.body
 
 	db.query(
-		`INSERT INTO marks (physics, maths, chem, total, percentage, roll) VALUES(${physics}, ${maths}, ${chem}, ${total}, ${percentage}, ${roll})`,
+		`INSERT INTO marks (physics, maths, chem, total, percentage, roll) VALUES(${parseInt(
+			physics
+		)}, ${parseInt(maths)}, ${parseInt(chem)}, ${parseInt(total)}, ${parseInt(
+			percentage
+		)},
+		 ${parseInt(roll)})`,
 		(err, _) => {
 			if (err) {
 				res.json({ msg: err.message })
@@ -20,14 +24,14 @@ const postMarks = expressAsyncHandler(async (req, res) => {
 const getLeaderBoard = expressAsyncHandler(async (req, res) => {
 	const { roll, limit, offset, sort, order } = req.query
 
-	const whereRoll = `WHERE roll = ${roll}`
+	const whereRoll = `WHERE roll = ${parseInt(roll)}`
 
 	db.query(
 		`SELECT * FROM marks ${
-			roll ? whereRoll : undefined
-		} ORDER BY ${sort} ${order} LIMIT ${parseInt(limit)} OFFSET ${parseInt(
-			offset
-		)}`,
+			roll !== "undefined" ? whereRoll : undefined
+		} ORDER BY ${sort} ${order} LIMIT ${parseInt(limit)} OFFSET ${
+			parseInt(offset) * parseInt(limit)
+		}`,
 		(err, result) => {
 			if (err) {
 				res.json({ msg: err.message })
